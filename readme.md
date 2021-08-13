@@ -163,17 +163,44 @@ function App() {
 
 export default App;
 ```
+
+If you need more components to have access to these states, just add them inside the provider:
+
+```javascript
+import { GlobalProvider } from "./contexts/GlobalContext";
+
+function App() {
+	var [darkmode, setDarkmode] = useState(false);
+	var [someState, setSomeState] = useState({});
+
+	return (
+		<GlobalProvider value={{
+			darkmode, setDarkmode,
+			someState, setSomeState
+		}}>
+			<SomeComponent />
+			<SomeOtherComponent />
+			<SomeThirdComponent />
+			<SomethingCompletelyDifferent />
+			<CantThinkOfAnyNames />
+			<AaaaarGh />
+		</GlobalProvider>
+	);
+}
+
+export default App;
+```
+
 ### Usage
 Let's say you need:
 
-`setDarkmode` in `<SomeComponent />`
-
-and
-
-`darkmode` in `<SomeOtherComponent />`
+1) `setDarkmode` in `<SomeComponent />`
+2) `darkmode` in `<SomeOtherComponent />`
+3) `darkmode` and `setDarkmode` in `<CantThinkOfAnyNames />`
 
 you can use the `useGlobalContext` -hook to "grab" these values from the context:
 
+#### SomeComponent
 ```javascript
 import useGlobalContext from "../contexts/GlobalContext";
 
@@ -188,6 +215,7 @@ function SomeComponent(){
 export default SomeComponent;
 ```
 
+#### SomeOtherComponent
 ```javascript
 import useGlobalContext from "../contexts/GlobalContext";
 
@@ -200,4 +228,19 @@ function SomeOtherComponent(){
 }
 
 export default SomeOtherComponent;
+```
+
+#### CantThinkOfAnyNames
+```javascript
+import useGlobalContext from "../contexts/GlobalContext";
+
+function CantThinkOfAnyNames(){
+	var {darkmode, setDarkmode} = useGlobalContext();
+
+	return (
+		// Use darkmode and setDarkmode for whatever
+	);
+}
+
+export default CantThinkOfAnyNames;
 ```
