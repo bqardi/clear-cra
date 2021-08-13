@@ -31,6 +31,17 @@ const inquirer = require("inquirer");
 				"Add src/contexts folder"
 			],
 		},
+		{
+			name: "contexts",
+			type: "list",
+			message: "You selected 'contexts' -folder, would you like to create a global provider?",
+			choices: [
+				"No thanks!",
+				"Create",
+				"Create w/example + comments",
+			],
+			when: (answers) => answers.databasetype === "Add src/contexts folder"
+		},
 	])
 	.then((answers) => {
 		var files = [
@@ -62,8 +73,11 @@ const inquirer = require("inquirer");
 			}
 			if (option === "Add src/contexts folder") {
 				srcFolders.push("contexts");
+				console.log(answers.contexts);
 			}
 		});
+
+
 		
 		files.forEach(file => {
 			if (fs.existsSync(file)){
