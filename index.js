@@ -114,23 +114,23 @@ const srcIndexCSS = `body {
 }
 `;
 const srcAppJS = `${addImports()}function App() {
-	return (${isGlobalContext() && `\n\t\t<GlobalProvider value={{}}>`}
-		${isGlobalContext() && "\t"}${answers.options.includes("Keep tests") ? "Learn React" : isGlobalContext() ? "{null}" : "null"}
-	${isGlobalContext() ? `</GlobalProvider>\n\t)` : ")"};
+	return (${isGlobalContext() ? `\n\t\t<GlobalProvider value={{}}>` : ""}
+${isGlobalContext() ? "\t" : ""}${answers.options.includes("Keep tests") ? "\t\tLearn React" : isGlobalContext() ? "\t\t{null}" : "\t\tnull"}
+${isGlobalContext() ? "\t\t</GlobalProvider>\n\t)" : "\t)"};
 }
 
 export default App;
 `;
 
 function addImports(){
-	const appCSS = answers.options.includes("Keep src/App.css") ? `import "App.css";\n` : "";
-	const globalProvider = isGlobalContext() ? `import { GlobalProvider } from "./contexts/GlobalContext";\n\n` : "";
+	const globalProvider = isGlobalContext() ? `import { GlobalProvider } from "./contexts/GlobalContext";\n` : "";
+	var appCSS = answers.options.includes("Keep src/App.css") ? `import "App.css";\n\n` : "";
 
 	if (appCSS && !globalProvider) {
 		appCSS += "\n";
 	}
 
-	return appCSS + globalProvider;
+	return globalProvider + appCSS;
 }
 
 function isGlobalContext(){
