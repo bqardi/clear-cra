@@ -12,14 +12,14 @@ This is very usefull when you don't want to remove all files yourself.
 
 These are the files that clear-cra tries to remove:
 
-- src/App.test.js
-- src/App.css
-- src/setupTests.js
+- src/App.css (choice to keep)
+- src/App.test.js (choice to keep)
+- src/setupTests.js (choice to keep)
 - src/reportWebVitals.js
 - src/logo.svg
-- public/manifest.json
-- public/logo192.png
-- public/logo512.png
+- public/manifest.json (choice to keep)
+- public/logo192.png (choice to keep)
+- public/logo512.png (choice to keep)
 
 ## Which files are changed?
 
@@ -52,6 +52,8 @@ body {
 - src/App.js
 
 ```javascript
+// import "./App.css"; - added if "Keep src/App.css" is chosen
+
 function App() {
 	return (
 		null
@@ -75,6 +77,8 @@ export default App;
 		name="description"
 		content="Web site created using create-react-app"
 	/>
+	<!-- <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" /> - added if "keep src/manifest.json" is chosen -->
+	<!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> - added if "keep src/manifest.json" is chosen -->
 	<title>React App</title>
 </head>
 <body>
