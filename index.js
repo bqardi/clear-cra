@@ -7,6 +7,16 @@ const inquirer = require("inquirer");
 	const fs = require("fs");
 	const path = require("path");
 
+	if (!fs.existsSync("package.json")){
+		console.log(
+			chalk.red("You need to run "),
+			chalk.blue("npx create-react-app [project-name]"),
+			chalk.red(" BEFORE you run"),
+			chalk.blue("npx clear-cra"),
+			chalk.red("!"));
+		return;
+	}
+
 	inquirer.prompt([
 		{
 			name: "options",
