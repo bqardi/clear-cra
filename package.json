@@ -1,6 +1,6 @@
 {
   "name": "clear-cra",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Clears boilerplate content by deleting unnecessary files and changes code to a required minimum.",
   "main": "index.js",
   "scripts": {
@@ -25,5 +25,6 @@
   "homepage": "https://github.com/bqardi/clear-cra#readme",
   "bin":{
     "clear-cra": "index.js"
-  }
+  },
+  "type": "module"
 }
