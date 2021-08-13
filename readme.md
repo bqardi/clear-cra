@@ -96,6 +96,7 @@ export default App;
 If you select the context folder option, you are asked if you also want to create a global provider.
 This is a provider you can use to store global state in, and then share these states with any component inside the provider (also deeply nested components).
 
+### Create it
 If you choose to create this provider, two things happen:
 1) A `GlobalContext.js` -file is created inside the `context` -folder.
 2) The provider from `GlobalContext.js` is "wrapped" around the returned content from `App.js`
@@ -116,6 +117,7 @@ function App() {
 export default App;
 ```
 
+### Setup
 The `value` -prop is where all shared data should go, and off course, you, decide what should go in there, but to show you an example, it would look something like this:
 
 ```javascript
@@ -139,7 +141,7 @@ export default App;
 
 Now all components inside `<GlobalProvider>` (`<SomeComponent />` and `<SomeOtherComponent />`) has access to `darkmode` and `setDarkmode`.
 
-If you need mores state, just add it:
+If you need more state, just add it:
 
 ```javascript
 import { GlobalProvider } from "./contexts/GlobalContext";
@@ -161,7 +163,7 @@ function App() {
 
 export default App;
 ```
-
+### Usage
 Let's say you need:
 
 `setDarkmode` in `<SomeComponent />`
@@ -170,7 +172,7 @@ and
 
 `darkmode` in `<SomeOtherComponent />`
 
-you can use the `useGlobalContext` -hook to "grab" them from:
+you can use the `useGlobalContext` -hook to "grab" these values from the context:
 
 ```javascript
 import useGlobalContext from "../contexts/GlobalContext";
