@@ -34,10 +34,10 @@ import "./index.css";
 import App from "./App";
 
 ReactDOM.render(
- <React.StrictMode>
-  <App />
- </React.StrictMode>,
- document.getElementById("root")
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 ```
 
@@ -45,7 +45,7 @@ ReactDOM.render(
 
 ```css
 body {
- margin: 0;
+  margin: 0;
 }
 ```
 
@@ -56,9 +56,9 @@ body {
 import "./App.css";
 
 function App() {
- return (
-  null
- );
+  return (
+    null
+  );
 }
 
 export default App;
@@ -70,23 +70,23 @@ export default App;
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="utf-8" />
- <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
- <meta name="viewport" content="width=device-width, initial-scale=1" />
- <meta name="theme-color" content="#000000" />
- <meta
-  name="description"
-  content="Web site created using create-react-app"
- />
- <!-- Added only if "keep src/manifest.json" is chosen: -->
- <!-- <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" /> -->
- <!-- Added only if "keep src/manifest.json" is chosen: -->
- <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
- <title>React App</title>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta
+    name="description"
+    content="Web site created using create-react-app"
+  />
+  <!-- Added only if "keep src/manifest.json" is chosen: -->
+  <!-- <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" /> -->
+  <!-- Added only if "keep src/manifest.json" is chosen: -->
+  <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
+  <title>React App</title>
 </head>
 <body>
- <noscript>You need to enable JavaScript to run this app.</noscript>
- <div id="root"></div>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
 </body>
 </html>
 ```
@@ -107,11 +107,11 @@ If you choose to create this provider, two things happen:
 import { GlobalProvider } from "./contexts/GlobalContext";
 
 function App() {
- return (
-  <GlobalProvider value={{}}>
-   {null}
-  </GlobalProvider>
- );
+  return (
+    <GlobalProvider value={{}}>
+      {null}
+    </GlobalProvider>
+  );
 }
 
 export default App;
@@ -124,16 +124,16 @@ The `value` -prop is where all shared data should go, and off course, you, decid
 import { GlobalProvider } from "./contexts/GlobalContext";
 
 function App() {
- var [darkmode, setDarkmode] = useState(false);
+  var [darkmode, setDarkmode] = useState(false);
 
- return (
-  <GlobalProvider value={{
-   darkmode, setDarkmode
-  }}>
-   <SomeComponent />
-   <SomeOtherComponent />
-  </GlobalProvider>
- );
+  return (
+    <GlobalProvider value={{
+      darkmode, setDarkmode
+    }}>
+      <SomeComponent />
+      <SomeOtherComponent />
+    </GlobalProvider>
+  );
 }
 
 export default App;
@@ -147,18 +147,18 @@ If you need more state, just add it:
 import { GlobalProvider } from "./contexts/GlobalContext";
 
 function App() {
- var [darkmode, setDarkmode] = useState(false);
- var [someState, setSomeState] = useState({});
+  var [darkmode, setDarkmode] = useState(false);
+  var [someState, setSomeState] = useState({});
 
- return (
-  <GlobalProvider value={{
-   darkmode, setDarkmode,
-   someState, setSomeState
-  }}>
-   <SomeComponent />
-   <SomeOtherComponent />
-  </GlobalProvider>
- );
+  return (
+    <GlobalProvider value={{
+      darkmode, setDarkmode,
+      someState, setSomeState
+    }}>
+      <SomeComponent />
+      <SomeOtherComponent />
+    </GlobalProvider>
+  );
 }
 
 export default App;
@@ -170,22 +170,22 @@ If you need more components to have access to these states, just add them inside
 import { GlobalProvider } from "./contexts/GlobalContext";
 
 function App() {
- var [darkmode, setDarkmode] = useState(false);
- var [someState, setSomeState] = useState({});
+  var [darkmode, setDarkmode] = useState(false);
+  var [someState, setSomeState] = useState({});
 
- return (
-  <GlobalProvider value={{
-   darkmode, setDarkmode,
-   someState, setSomeState
-  }}>
-   <SomeComponent />
-   <SomeOtherComponent />
-   <SomeThirdComponent />
-   <SomethingCompletelyDifferent />
-   <CantThinkOfAnyNames />
-   <AaaaarGh />
-  </GlobalProvider>
- );
+  return (
+    <GlobalProvider value={{
+      darkmode, setDarkmode,
+      someState, setSomeState
+    }}>
+      <SomeComponent />
+      <SomeOtherComponent />
+      <SomeThirdComponent />
+      <SomethingCompletelyDifferent />
+      <CantThinkOfAnyNames />
+      <AaaaarGh />
+    </GlobalProvider>
+  );
 }
 
 export default App;
@@ -205,11 +205,11 @@ you can use the `useGlobalContext` -hook to "grab" these values from the context
 import useGlobalContext from "../contexts/GlobalContext";
 
 function SomeComponent(){
- var {setDarkmode} = useGlobalContext();
+  var {setDarkmode} = useGlobalContext();
 
- return (
-  // Use setDarkmode for whatever
- );
+  return (
+    // Use setDarkmode for whatever
+  );
 }
 
 export default SomeComponent;
@@ -220,11 +220,11 @@ export default SomeComponent;
 import useGlobalContext from "../contexts/GlobalContext";
 
 function SomeOtherComponent(){
- var {darkmode} = useGlobalContext();
+  var {darkmode} = useGlobalContext();
 
- return (
-  // Use darkmode for whatever
- );
+  return (
+    // Use darkmode for whatever
+  );
 }
 
 export default SomeOtherComponent;
@@ -235,11 +235,11 @@ export default SomeOtherComponent;
 import useGlobalContext from "../contexts/GlobalContext";
 
 function CantThinkOfAnyNames(){
- var {darkmode, setDarkmode} = useGlobalContext();
+  var {darkmode, setDarkmode} = useGlobalContext();
 
- return (
-  // Use darkmode and setDarkmode for whatever
- );
+  return (
+    // Use darkmode and setDarkmode for whatever
+  );
 }
 
 export default CantThinkOfAnyNames;
