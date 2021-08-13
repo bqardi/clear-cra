@@ -93,7 +93,7 @@ const srcIndexCSS = `body {
 `;
 const srcAppJS = `${answers.options.includes("Keep src/App.css") ? "import \"App.css\";\n\n" : ""}function App() {
 	return (
-		null
+		${answers.options.includes("Keep tests") ? "Learn React" : "null"}
 	);
 }
 
@@ -113,7 +113,7 @@ const publicIndexHTML = `<!DOCTYPE html>
 	<meta
 		name="description"
 		content="Web site created using create-react-app"
-	/>${answers.options.includes("Keep src/manifest.json") ? "\n<link rel=\"apple-touch-icon\" href=\"%PUBLIC_URL%/logo192.png\" />" : ""}
+	/>${answers.options.includes("Keep src/manifest.json") ? "\n\t<link rel=\"apple-touch-icon\" href=\"%PUBLIC_URL%/logo192.png\" />" : ""}
 	${answers.options.includes("Keep src/manifest.json") ? "<link rel=\"manifest\" href=\"%PUBLIC_URL%/manifest.json\" />\n" : ""}<title>React App</title>
 </head>
 <body>
