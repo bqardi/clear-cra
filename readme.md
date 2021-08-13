@@ -18,7 +18,6 @@ These are the files that clear-cra tries to remove:
 - src/reportWebVitals.js
 - src/logo.svg
 - public/manifest.json
-- public/favicon.ico
 - public/logo192.png
 - public/logo512.png
 
@@ -76,8 +75,6 @@ export default App;
 		name="description"
 		content="Web site created using create-react-app"
 	/>
-	<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-	<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 	<title>React App</title>
 </head>
 <body>
