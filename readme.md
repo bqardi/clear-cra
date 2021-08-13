@@ -90,3 +90,112 @@ export default App;
 </body>
 </html>
 ```
+
+## Bonus!
+
+If you select the context folder option, you are asked if you also want to create a global provider.
+This is a provider you can use to store global state in, and then share these states with any component inside the provider (also deeply nested components).
+
+If you choose to create this provider, two things happen:
+1) A `GlobalContext.js` -file is created inside the `context` -folder.
+2) The provider from `GlobalContext.js` is "wrapped" around the returned content from `App.js`
+
+`App.js` will then look something like this:
+
+```javascript
+import { GlobalProvider } from "./contexts/GlobalContext";
+
+function App() {
+	return (
+		<GlobalProvider value={{}}>
+			{null}
+		</GlobalProvider>
+	);
+}
+
+export default App;
+```
+
+The `value` -prop is where all shared data should go, and off course, you, decide what should go in there, but to show you an example, it would look something like this:
+
+```javascript
+import { GlobalProvider } from "./contexts/GlobalContext";
+
+function App() {
+	var [darkmode, setDarkmode] = useState(false);
+
+	return (
+		<GlobalProvider value={{
+			darkmode, setDarkmode
+		}}>
+			<SomeComponent />
+			<SomeOtherComponent />
+		</GlobalProvider>
+	);
+}
+
+export default App;
+```
+
+Now all components inside `<GlobalProvider>` (`<SomeComponent />` and `<SomeOtherComponent />`) has access to `darkmode` and `setDarkmode`.
+
+If you need mores state, just add it:
+
+```javascript
+import { GlobalProvider } from "./contexts/GlobalContext";
+
+function App() {
+	var [darkmode, setDarkmode] = useState(false);
+	var [someState, setSomeState] = useState({});
+
+	return (
+		<GlobalProvider value={{
+			darkmode, setDarkmode,
+			someState, setSomeState
+		}}>
+			<SomeComponent />
+			<SomeOtherComponent />
+		</GlobalProvider>
+	);
+}
+
+export default App;
+```
+
+Let's say you need:
+
+`setDarkmode` in `<SomeComponent />`
+
+and
+
+`darkmode` in `<SomeOtherComponent />`
+
+you can use the `useGlobalContext` -hook to "grab" them from:
+
+```javascript
+import useGlobalContext from "../contexts/GlobalContext";
+
+function SomeComponent(){
+	var {setDarkmode} = useGlobalContext();
+
+	return (
+		// Use setDarkmode for whatever
+	);
+}
+
+export default SomeComponent;
+```
+
+```javascript
+import useGlobalContext from "../contexts/GlobalContext";
+
+function SomeOtherComponent(){
+	var {darkmode} = useGlobalContext();
+
+	return (
+		// Use darkmode for whatever
+	);
+}
+
+export default SomeOtherComponent;
+```
