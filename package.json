@@ -1,0 +1,29 @@
+{
+  "name": "clear-cra",
+  "version": "1.0.1",
+  "description": "Clears boilerplate content by deleting unnecessary files and changes code to a required minimum.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bqardi/clear-cra.git"
+  },
+  "keywords": [
+    "react",
+    "clear",
+    "clean",
+    "boilerplate",
+    "remove"
+  ],
+  "author": "Sune <bqardi@msn.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bqardi/clear-cra/issues"
+  },
+  "homepage": "https://github.com/bqardi/clear-cra#readme",
+  "bin":{
+    "clear-cra": "index.js"
+  }
+}
