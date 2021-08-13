@@ -29,7 +29,7 @@ const chalk = require('chalk');
 		if (fs.existsSync(file)){
 			fs.rm(file, {recursive: true}, (err) => {
 				if (err) throw err;
-				console.log(chalk.yellow("Removed: "), chalk.green(file));
+				console.log(chalk.yellow("Removed:"), chalk.green(file));
 			});
 		}
 	});
@@ -96,7 +96,7 @@ export default App;
 	.forEach(file => {
 		try {
 			fs.writeFileSync(file.src, file.content);
-			console.log(chalk.gray("Rewrote "), chalk.green(file.src));
+			console.log(chalk.gray("Rewrote:"), chalk.green(file.src));
 		} catch (err) {
 			console.log(chalk.red(err));
 		}
