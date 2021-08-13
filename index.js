@@ -32,15 +32,15 @@ const inquirer = require("inquirer");
 			],
 		},
 		{
-			name: "contexts",
+			name: "context",
 			type: "list",
 			message: "You selected 'contexts' -folder, would you like to create a global provider?",
 			choices: [
 				"No thanks!",
 				"Create",
-				"Create w/example + comments",
+				"Create w/comments",
 			],
-			when: (answers) => answers.databasetype === "Add src/contexts folder"
+			when: (answers) => answers.options.find(option => option === "Add src/contexts folder")
 		},
 	])
 	.then((answers) => {
@@ -73,18 +73,6 @@ const inquirer = require("inquirer");
 			}
 			if (option === "Add src/contexts folder") {
 				srcFolders.push("contexts");
-				console.log(answers.contexts);
-			}
-		});
-
-
-		
-		files.forEach(file => {
-			if (fs.existsSync(file)){
-				fs.rm(file, {recursive: true}, (err) => {
-					if (err) throw err;
-					console.log(chalk.magenta("Removed:"), chalk.green(file));
-				});
 			}
 		});
 
@@ -95,8 +83,18 @@ const inquirer = require("inquirer");
 				err => {
 					if (err) return console.error(chalk.red(err));
 					console.log(chalk.yellow("Created:"), chalk.green(folder));
+					if (folder === "contexts") contextFile();
 				}
 			);
+		});
+		
+		files.forEach(file => {
+			if (fs.existsSync(file)){
+				fs.rm(file, {recursive: true}, (err) => {
+					if (err) throw err;
+					console.log(chalk.magenta("Removed:"), chalk.green(file));
+				});
+			}
 		});
 
 const srcIndexJS = `import React from "react";
@@ -115,14 +113,30 @@ const srcIndexCSS = `body {
 	margin: 0;
 }
 `;
-const srcAppJS = `${answers.options.includes("Keep src/App.css") ? "import \"App.css\";\n\n" : ""}function App() {
-	return (
-		${answers.options.includes("Keep tests") ? "Learn React" : "null"}
-	);
+const srcAppJS = `${addImports()}function App() {
+	return (${isGlobalContext() && `\n\t\t<GlobalProvider value={{}}>`}
+		${isGlobalContext() && "\t"}${answers.options.includes("Keep tests") ? "Learn React" : isGlobalContext() ? "{null}" : "null"}
+	${isGlobalContext() ? `</GlobalProvider>\n\t)` : ")"};
 }
 
 export default App;
 `;
+
+function addImports(){
+	const appCSS = answers.options.includes("Keep src/App.css") ? `import "App.css";\n` : "";
+	const globalProvider = isGlobalContext() ? `import { GlobalProvider } from "./contexts/GlobalContext";\n\n` : "";
+
+	if (appCSS && !globalProvider) {
+		appCSS += "\n";
+	}
+
+	return appCSS + globalProvider;
+}
+
+function isGlobalContext(){
+	return answers.context === "Create" || answers.context === "Create w/comments";
+}
+
 const srcAppCSS = `.App {
 	color: red;
 }
@@ -174,12 +188,111 @@ const publicIndexHTML = `<!DOCTYPE html>
 		}
 
 		changeFiles.forEach(file => {
+			createWriteFile(file.src, file.content);
+		});
+
+		function createWriteFile(src, content, message="Rewrote:"){
 			try {
-				fs.writeFileSync(file.src, file.content);
-				console.log(chalk.yellow("Rewrote:"), chalk.green(file.src));
+				fs.writeFileSync(src, content);
+				console.log(chalk.yellow(message), chalk.green(src));
 			} catch (err) {
 				console.log(chalk.red(err));
 			}
-		});
+		}
+
+		function contextFile(){
+			
+			switch (answers.context) {
+				case "Create":
+					createWriteFile(path.join("src", "contexts", "GlobalContext.js"), `import { createContext, useContext } from "react";
+
+var GlobalContext = createContext();
+
+function useGlobalContext(){
+	return useContext(GlobalContext);
+}
+
+export function GlobalProvider({children, value}){
+	return (
+		<GlobalContext.Provider value={value}>
+			{children}
+		</GlobalContext.Provider>
+	);
+}
+
+export default useGlobalContext;
+`, "Created:");
+					break;
+				case "Create w/comments":
+					createWriteFile(path.join("src", "contexts", "GlobalContext.js"), `import { createContext, useContext } from "react";
+
+// The actual context:
+var GlobalContext = createContext();
+
+// A custom hook that makes it a bit simpler to use:
+// Usage:
+// In whichever component you wish to get the value
+// from the context, just import 'useGlobalContext'
+// and destructure the value. For example:
+// 
+// import useGlobalContext from "useGlobalContext";
+// 
+// function Darkmode(){
+//   // Destructuring 'darkmode' and 'setDarkmode' from the context:
+//   var {darkmode, setDarkmode} = useGlobalContext();
+// 
+//   return (
+//     // Toggling darkmode using 'setDarkmode' in the onClick event:
+//     <button onClick={() => setDarkmode(prev => !prev)}>
+//       // Using 'darkmode' from the context:
+//       // Whenever we press the button, the 'darkmode' -value
+//       // changes between dark and light, and the button rerenders
+//       // meaning the button-text changes between "Go light" and "Go dark"
+//       {darkmode ? "Go light" : "Go dark"}
+//     </button>
+//   )
+// }
+function useGlobalContext(){
+	return useContext(GlobalContext);
+}
+
+// The Provider component:
+export function GlobalProvider({children, value}){
+	return (
+		<GlobalContext.Provider value={value}>
+			{children}
+		</GlobalContext.Provider>
+	);
+}
+// Usage (with the darkmode example from above):
+// import { GlobalProvider } from "./contexts/GlobalContext";
+// import Darkmode from "./components/Darkmode";
+// 
+// function App() {
+//   // Setting a state:
+//   var [darkmode, setDarkmode] = setState(false);
+// 
+// 	 return (
+//     // Passing 'darkmode' and 'setDarkmode' to the provider:
+// 		 <GlobalProvider value={{darkmode, setDarkmode}}>
+//       // Now the Darkmode component has access to both
+//       // 'darkmode' and 'setDarkmode' with the
+//       // 'useGlobalContext' hook (see example above)
+// 		   <Darkmode />
+// 		 </GlobalProvider>
+// 	 );
+// }
+// 
+// export default App;
+
+export default useGlobalContext;
+`, "Created:");
+					break;
+			
+				default:
+					break;
+			}
+		}
+		
 	});
 })();
