@@ -29,7 +29,7 @@ const chalk = require('chalk');
 		if (fs.existsSync(file)){
 			fs.rm(file, {recursive: true}, (err) => {
 				if (err) throw err;
-				console.log(chalk.gray("Removed: "), chalk.green(file));
+				console.log(chalk.yellow("Removed: "), chalk.green(file));
 			});
 		}
 	});
@@ -38,59 +38,59 @@ const chalk = require('chalk');
 		{
 			src: "src/index.js",
 			content: `import React from "react";
-								import ReactDOM from "react-dom";
-								import "./index.css";
-								import App from "./App";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 
-								ReactDOM.render(
-									<React.StrictMode>
-										<App />
-									</React.StrictMode>,
-									document.getElementById("root")
-								);
-								`
+ReactDOM.render(
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>,
+	document.getElementById("root")
+);
+`
 		},
 		{
 			src: "src/index.css",
 			content: `body {
-									margin: 0;
-								}
-								`
+	margin: 0;
+}
+`
 		},
 		{
 			src: "src/App.js",
 			content: `function App() {
-									return (
-										null
-									);
-								}
+	return (
+		null
+	);
+}
 
-								export default App;
-								`
+export default App;
+`
 		},
 		{
 			src: "public/index.html",
 			content: `<!DOCTYPE html>
-								<html lang="en">
-								<head>
-									<meta charset="utf-8" />
-									<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-									<meta name="viewport" content="width=device-width, initial-scale=1" />
-									<meta name="theme-color" content="#000000" />
-									<meta
-										name="description"
-										content="Web site created using create-react-app"
-									/>
-									<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-									<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-									<title>React App</title>
-								</head>
-								<body>
-									<noscript>You need to enable JavaScript to run this app.</noscript>
-									<div id="root"></div>
-								</body>
-								</html>
-								`
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#000000" />
+	<meta
+		name="description"
+		content="Web site created using create-react-app"
+	/>
+	<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+	<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+	<title>React App</title>
+</head>
+<body>
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+	<div id="root"></div>
+</body>
+</html>
+`
 		}
 	]
 	.forEach(file => {
