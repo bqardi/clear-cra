@@ -45,13 +45,13 @@ const inquirer = require("inquirer");
 				files = files.filter(file => file !== "public/App.css");
 			}
 			if (option === "Add src/components folder") {
-				srcFolders = srcFolders.push("components");
+				srcFolders.push("components");
 			}
 			if (option === "Add src/hooks folder") {
-				srcFolders = srcFolders.push("hooks");
+				srcFolders.push("hooks");
 			}
 			if (option === "Add src/contexts folder") {
-				srcFolders = srcFolders.push("contexts");
+				srcFolders.push("contexts");
 			}
 		});
 		
