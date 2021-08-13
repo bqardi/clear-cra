@@ -7,17 +7,14 @@
 	fs.mkdir(
 		path.join("src", "components"),
 		{recursive: true},
-		(err) => {
-			if (err) {
-				return console.error(err);
-			}
+		err => {
+			if (err) return console.error(chalk.red(err));
 		}
 	);
 
-	// ************************************************************
-
 	[
 		"src/App.test.js",
+		"src/App.css",
 		"src/setupTests.js",
 		"src/reportWebVitals.js",
 		"src/logo.svg",
@@ -29,17 +26,13 @@
 	.forEach(file => {
 		if (fs.existsSync(file)){
 			fs.rm(file, {recursive: true}, (err) => {
-				if (err) {
-					throw err;
-				}
-				console.log("Removed: ", file);
+				if (err) throw err;
+				console.log(chalk.gray("Removed: "), chalk.green(file));
 			});
 		}
 	});
-	
-	// ************************************************************
 
-	const files = [
+	[
 		{
 			src: "src/index.js",
 			content: `import React from "react";
@@ -64,24 +57,13 @@
 		},
 		{
 			src: "src/App.js",
-			content: `import "./App.css";
-
-								function App() {
+			content: `function App() {
 									return (
-										<div className="App">
-											Clear
-										</div>
+										null
 									);
 								}
 
 								export default App;
-								`
-		},
-		{
-			src: "src/App.css",
-			content: `.App {
-									color: hsl(0, 0%, 8%);
-								}
 								`
 		},
 		{
@@ -109,13 +91,12 @@
 								`
 		}
 	]
-	
-	files.forEach(file => {
+	.forEach(file => {
 		try {
 			fs.writeFileSync(file.src, file.content);
-			console.log("Rewrote ", file.src);
+			console.log(chalk.gray("Rewrote "), chalk.green(file.src));
 		} catch (err) {
-			console.error(err);
+			console.log(chalk.red(err));
 		}
 	});
 })();
