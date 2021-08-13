@@ -9,11 +9,11 @@ const inquirer = require("inquirer");
 
 	if (!fs.existsSync("package.json")){
 		console.log(
-			chalk.red("You need to run "),
-			chalk.blue("npx create-react-app [project-name]"),
-			chalk.red(" BEFORE you run"),
-			chalk.blue("npx clear-cra"),
-			chalk.red("!"));
+			chalk.red("Error!"),
+			chalk.gray("You need to run"),
+			chalk.cyan("npx create-react-app [project-name]"),
+			chalk.gray("BEFORE you run"),
+			chalk.cyan("npx clear-cra") + chalk.gray("!"));
 		return;
 	}
 
