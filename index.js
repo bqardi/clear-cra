@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const chalk = require('chalk');
+
 (function () {
 	const fs = require("fs");
 	const path = require("path");
