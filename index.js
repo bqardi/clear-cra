@@ -123,11 +123,11 @@ export default App;
 `;
 
 function addImports(){
-	const globalProvider = isGlobalContext() ? `import { GlobalProvider } from "./contexts/GlobalContext";\n` : "";
-	var appCSS = answers.options.includes("Keep src/App.css") ? `import "App.css";\n\n` : "";
+	var globalProvider = isGlobalContext() ? `import { GlobalProvider } from "./contexts/GlobalContext";\n` : "";
+	const appCSS = answers.options.includes("Keep src/App.css") ? `import "App.css";\n\n` : "";
 
-	if (appCSS && !globalProvider) {
-		appCSS += "\n";
+	if (globalProvider && !appCSS) {
+		globalProvider += "\n";
 	}
 
 	return globalProvider + appCSS;
