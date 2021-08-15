@@ -2,6 +2,7 @@
 
 const chalk = require("chalk");
 const inquirer = require("inquirer");
+const file = require("./fileContent");
 
 (function () {
 	const fs = require("fs");
@@ -54,142 +55,116 @@ const inquirer = require("inquirer");
 			"public/logo192.png",
 			"public/logo512.png"
 		];
-		var srcFolders = [];
-		answers.options.forEach(option => {
-			if (option === "Keep tests") {
-				files = files.filter(file => file !== "src/App.test.js" && file !== "src/setupTests.js");
+		var srcFolders = [
+			{
+				dir: "src",
+				name: "components",
+				create: answers.options.includes("Add src/components folder")
+			},
+			{
+				dir: "src",
+				name: "hooks",
+				create: answers.options.includes("Add src/hooks folder")
+			},
+			{
+				dir: "src",
+				name: "contexts",
+				create: answers.options.includes("Add src/contexts folder")
 			}
-			if (option === "Keep src/manifest.json") {
-				files = files.filter(file => file !== "public/manifest.json" && file !== "public/logo192.png" && file !== "public/logo512.png");
-			}
-			if (option === "Keep src/App.css") {
-				files = files.filter(file => file !== "public/App.css");
-			}
-			if (option === "Add src/components folder") {
-				srcFolders.push("components");
-			}
-			if (option === "Add src/hooks folder") {
-				srcFolders.push("hooks");
-			}
-			if (option === "Add src/contexts folder") {
-				srcFolders.push("contexts");
-			}
-		});
-
-		srcFolders.forEach(folder => {
-			fs.mkdir(
-				path.join("src", folder),
-				{recursive: true},
-				err => {
-					if (err) return console.error(chalk.red(err));
-					console.log(chalk.yellow("Created:"), chalk.green(folder));
-					if (folder === "contexts") contextFile();
-				}
-			);
-		});
-		
-		files.forEach(file => {
-			if (fs.existsSync(file)){
-				fs.rm(file, {recursive: true}, (err) => {
-					if (err) throw err;
-					console.log(chalk.magenta("Removed:"), chalk.green(file));
-				});
-			}
-		});
-
-const srcIndexJS = `import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-
-ReactDOM.render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
-	document.getElementById("root")
-);
-`;
-const srcIndexCSS = `body {
-	margin: 0;
-}
-`;
-const srcAppJS = `${addImports()}function App() {
-	return (${isGlobalContext() ? `\n\t\t<GlobalProvider value={{}}>` : ""}
-${isGlobalContext() ? "\t" : ""}${answers.options.includes("Keep tests") ? "\t\tLearn React" : isGlobalContext() ? "\t\t{null}" : "\t\tnull"}
-${isGlobalContext() ? "\t\t</GlobalProvider>\n\t)" : "\t)"};
-}
-
-export default App;
-`;
-
-function addImports(){
-	var globalProvider = isGlobalContext() ? `import { GlobalProvider } from "./contexts/GlobalContext";\n` : "";
-	const appCSS = answers.options.includes("Keep src/App.css") ? `import "App.css";\n\n` : "";
-
-	if (globalProvider && !appCSS) {
-		globalProvider += "\n";
-	}
-
-	return globalProvider + appCSS;
-}
-
-function isGlobalContext(){
-	return answers.context === "Create" || answers.context === "Create w/comments";
-}
-
-const srcAppCSS = `.App {
-	color: red;
-}
-`;
-const publicIndexHTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="theme-color" content="#000000" />
-	<meta
-		name="description"
-		content="Web site created using create-react-app"
-	/>${answers.options.includes("Keep src/manifest.json") ? "\n\t<link rel=\"apple-touch-icon\" href=\"%PUBLIC_URL%/logo192.png\" />" : ""}
-	${answers.options.includes("Keep src/manifest.json") ? "<link rel=\"manifest\" href=\"%PUBLIC_URL%/manifest.json\" />\n" : ""}<title>React App</title>
-</head>
-<body>
-	<noscript>You need to enable JavaScript to run this app.</noscript>
-	<div id="root"></div>
-</body>
-</html>
-`;
+		];
 
 		var changeFiles = [
 			{
 				src: "src/index.js",
-				content: srcIndexJS
+				content: file.content.srcIndexJS
 			},
 			{
 				src: "src/index.css",
-				content: srcIndexCSS
+				content: file.content.srcIndexCSS
 			},
 			{
 				src: "src/App.js",
-				content: srcAppJS
+				content: file.content.srcAppJS(keep("Keep tests"), hasContext(), keep("Keep src/App.css"))
 			},
 			{
 				src: "public/index.html",
-				content: publicIndexHTML
+				content: file.content.publicIndexHTML(keep("Keep src/manifest.json"))
 			}
 		]
 
-		if (answers.options.includes("Keep src/App.css")) {
+		if (keep("Keep src/App.css")) {
 			changeFiles.push({
 				src: "src/App.css",
-				content: srcAppCSS
+				content: file.content.srcAppCSS
 			});
 		}
+		
+		if (answers.options.includes("Keep tests")) {
+			files = files.filter(file => file !== "src/App.test.js" && file !== "src/setupTests.js");
+		}
+		if (answers.options.includes("Keep src/manifest.json")) {
+			files = files.filter(file => file !== "public/manifest.json" && file !== "public/logo192.png" && file !== "public/logo512.png");
+		}
+		if (answers.options.includes("Keep src/App.css")) {
+			files = files.filter(file => file !== "public/App.css");
+		}
+
+		srcFolders.forEach(folder => {
+			if (folder.create) {
+				fs.mkdir(
+					path.join(folder.dir, folder.name),
+					{recursive: true},
+					err => {
+						if (err) return console.error(chalk.red(err));
+						console.log(chalk.yellow("Created:"), chalk.green(folder.name));
+						if (folder.name === "contexts") createContextFile(answers.context);
+					}
+				);
+			} else {
+				fs.rm(
+					path.join(folder.dir, folder.name),
+					{recursive: true},
+					err => {
+						if (err) {
+							if (err.code === "ENOENT") return;
+							return console.error(chalk.red(err))
+						};
+						console.log(chalk.magenta("Removed:"), chalk.green(folder.name));
+					}
+				);
+			}
+		});
+		
+		files.forEach(removeFile);
 
 		changeFiles.forEach(file => {
 			createWriteFile(file.src, file.content);
 		});
+
+		function hasContext(){
+			return answers.context === "Create" || answers.context === "Create w/comments";
+		}
+		
+		function keep(option){
+			return answers.options.includes(option);
+		}
+
+		function createContextFile(type){
+			switch (type) {
+				case "No thanks!":
+					removeFile(path.join("src", "contexts", "GlobalContext.js"));
+					break;
+				case "Create":
+					createWriteFile(path.join("src", "contexts", "GlobalContext.js"), file.content.contextCreate, "Created:");
+					break;
+				case "Create w/comments":
+					createWriteFile(path.join("src", "contexts", "GlobalContext.js"), file.content.contextCreateComment, "Created:");
+					break;
+			
+				default:
+					break;
+			}
+		}
 
 		function createWriteFile(src, content, message="Rewrote:"){
 			try {
@@ -200,97 +175,12 @@ const publicIndexHTML = `<!DOCTYPE html>
 			}
 		}
 
-		function contextFile(){
-			
-			switch (answers.context) {
-				case "Create":
-					createWriteFile(path.join("src", "contexts", "GlobalContext.js"), `import { createContext, useContext } from "react";
-
-var GlobalContext = createContext();
-
-function useGlobalContext(){
-	return useContext(GlobalContext);
-}
-
-export function GlobalProvider({children, value}){
-	return (
-		<GlobalContext.Provider value={value}>
-			{children}
-		</GlobalContext.Provider>
-	);
-}
-
-export default useGlobalContext;
-`, "Created:");
-					break;
-				case "Create w/comments":
-					createWriteFile(path.join("src", "contexts", "GlobalContext.js"), `import { createContext, useContext } from "react";
-
-// The actual context:
-var GlobalContext = createContext();
-
-// A custom hook that makes it a bit simpler to use:
-// Usage:
-// In whichever component you wish to get the value
-// from the context, just import 'useGlobalContext'
-// and destructure the value. For example:
-// 
-// import useGlobalContext from "useGlobalContext";
-// 
-// function Darkmode(){
-//   // Destructuring 'darkmode' and 'setDarkmode' from the context:
-//   var {darkmode, setDarkmode} = useGlobalContext();
-// 
-//   return (
-//     // Toggling darkmode using 'setDarkmode' in the onClick event:
-//     <button onClick={() => setDarkmode(prev => !prev)}>
-//       // Using 'darkmode' from the context:
-//       // Whenever we press the button, the 'darkmode' -value
-//       // changes between dark and light, and the button rerenders
-//       // meaning the button-text changes between "Go light" and "Go dark"
-//       {darkmode ? "Go light" : "Go dark"}
-//     </button>
-//   )
-// }
-function useGlobalContext(){
-	return useContext(GlobalContext);
-}
-
-// The Provider component:
-export function GlobalProvider({children, value}){
-	return (
-		<GlobalContext.Provider value={value}>
-			{children}
-		</GlobalContext.Provider>
-	);
-}
-// Usage (with the darkmode example from above):
-// import { GlobalProvider } from "./contexts/GlobalContext";
-// import Darkmode from "./components/Darkmode";
-// 
-// function App() {
-//   // Setting a state:
-//   var [darkmode, setDarkmode] = setState(false);
-// 
-// 	 return (
-//     // Passing 'darkmode' and 'setDarkmode' to the provider:
-// 		 <GlobalProvider value={{darkmode, setDarkmode}}>
-//       // Now the Darkmode component has access to both
-//       // 'darkmode' and 'setDarkmode' with the
-//       // 'useGlobalContext' hook (see example above)
-// 		   <Darkmode />
-// 		 </GlobalProvider>
-// 	 );
-// }
-// 
-// export default App;
-
-export default useGlobalContext;
-`, "Created:");
-					break;
-			
-				default:
-					break;
+		function removeFile(file){
+			if (fs.existsSync(file)){
+				fs.rm(file, {recursive: true}, (err) => {
+					if (err) throw err;
+					console.log(chalk.magenta("Removed:"), chalk.green(file));
+				});
 			}
 		}
 		
