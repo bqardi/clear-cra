@@ -92,21 +92,24 @@ const file = require("./fileContent");
 			}
 		]
 
+		if (keep("Keep tests")) {
+			// files = files.filter(file => file !== "src/App.test.js" && file !== "src/setupTests.js");
+			copyOriginalFile("src", "App.test.js");
+			copyOriginalFile("src", "setupTests.js");
+		}
+		if (keep("Keep src/manifest.json")) {
+			// files = files.filter(file => file !== "public/manifest.json" && file !== "public/logo192.png" && file !== "public/logo512.png");
+			copyOriginalFile("public", "manifest.json");
+			copyOriginalFile("public", "logo192.png");
+			copyOriginalFile("public", "logo512.png");
+		}
 		if (keep("Keep src/App.css")) {
+			// files = files.filter(file => file !== "public/App.css");
+			copyOriginalFile("public", "App.css");
 			changeFiles.push({
 				src: "src/App.css",
 				content: file.content.srcAppCSS
 			});
-		}
-		
-		if (answers.options.includes("Keep tests")) {
-			files = files.filter(file => file !== "src/App.test.js" && file !== "src/setupTests.js");
-		}
-		if (answers.options.includes("Keep src/manifest.json")) {
-			files = files.filter(file => file !== "public/manifest.json" && file !== "public/logo192.png" && file !== "public/logo512.png");
-		}
-		if (answers.options.includes("Keep src/App.css")) {
-			files = files.filter(file => file !== "public/App.css");
 		}
 
 		srcFolders.forEach(folder => {
@@ -163,6 +166,18 @@ const file = require("./fileContent");
 			
 				default:
 					break;
+			}
+		}
+
+		function copyOriginalFile(folder, file){
+			if (!fs.existsSync(file)){
+				fs.copyFile(path.join("node_modules/clear-cra/original", file), path.join(folder, file), err => {
+					if (err) {
+						console.log(chalk.red("Restoring files is not implemented yet! Couldn't restore file:"), chalk.green(file));
+						return;
+					};
+					console.log(chalk.yellow("Created:"), chalk.green(file));
+				});
 			}
 		}
 

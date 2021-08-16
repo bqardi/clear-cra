@@ -4,9 +4,9 @@
 
 `npx clear-cra`
 
-This is a very simple package that tries to remove and change boilerplate files after you have run create-react-app.
+This is a very simple package that tries to remove and edit boilerplate files after you have run create-react-app.
 
-This is very usefull when you don't want to remove all files yourself.
+This is very usefull when you don't want to remove and edit all files yourself.
 
 ## Which files are removed?
 
@@ -79,9 +79,9 @@ export default App;
     content="Web site created using create-react-app"
   />
   <!-- Added only if "keep src/manifest.json" is chosen: -->
-  <!-- <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" /> -->
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <!-- Added only if "keep src/manifest.json" is chosen: -->
-  <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <title>React App</title>
 </head>
 <body>
@@ -94,12 +94,12 @@ export default App;
 ## Bonus!
 
 If you select the context folder option, you are asked if you also want to create a global provider.
-This is a provider you can use to store global state in, and then share these states with any component inside the provider (also deeply nested components).
+This is a provider you can use to store global states, and then share these states with any component inside the provider (also deeply nested components).
 
 ### Create it
 If you choose to create this provider, two things happen:
 1) A `GlobalContext.js` -file is created inside the `context` -folder.
-2) The provider from `GlobalContext.js` is "wrapped" around the returned content from `App.js`
+2) The provider from `GlobalContext.js` is "wrapped" around the return-content in `App.js`
 
 `App.js` will then look something like this:
 
@@ -139,7 +139,7 @@ function App() {
 export default App;
 ```
 
-Now all components inside `<GlobalProvider>` (`<SomeComponent />` and `<SomeOtherComponent />`) has access to `darkmode` and `setDarkmode`.
+Now all components you add inside `<GlobalProvider>` (like `<SomeComponent />` and `<SomeOtherComponent />`) will have access to `darkmode` and `setDarkmode`.
 
 If you need more state, just add it:
 
@@ -192,7 +192,8 @@ export default App;
 ```
 
 ### Usage
-Let's say you need:
+One thing is to create access to global states, but we also need to "grab" these states inside other (child) components.
+As an example, let's say you need:
 
 1) `setDarkmode` in `<SomeComponent />`
 2) `darkmode` in `<SomeOtherComponent />`
