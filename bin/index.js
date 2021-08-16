@@ -72,7 +72,8 @@ const foldersToAdd = clearcraConfig.addFolders.map(
         message:
           "You selected 'contexts' -folder, would you like to create a global provider?",
         choices: ["No thanks!", "Create", "Create w/comments"],
-        when: (answers) => answers.folders?.includes("src/contexts"),
+        when: (answers) =>
+          answers.folders?.find((f) => f.folderPath.includes("src/contexts")),
       },
     ])
     .then((answers) => {
@@ -87,7 +88,7 @@ const foldersToAdd = clearcraConfig.addFolders.map(
         });
       }
 
-      // Restore files
+      // Restore files (Not support restore `add folders` yet~)
       if (answers.action === actions.RESTORE_FILES) {
         filesToRemove.forEach((file) => {
           file.restore();
