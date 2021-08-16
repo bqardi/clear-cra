@@ -2,8 +2,14 @@
   "name": "clear-cra",
   "version": "1.1.22",
   "description": "Clears boilerplate content by deleting unnecessary files and changes code to a required minimum.",
-  "main": "index.js",
+  "main": "bin/index.js",
+  "files": [
+    "bin",
+    "lib"
+  ],
   "scripts": {
+    "prepublish": "npm run format",
+    "format": "prettier --write ./**/*.{js,json}",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,10 +30,13 @@
   },
   "homepage": "https://github.com/bqardi/clear-cra#readme",
   "bin": {
-    "clear-cra": "index.js"
+    "clear-cra": "bin/index.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",
     "inquirer": "^8.1.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.3.2"
   }
 }
