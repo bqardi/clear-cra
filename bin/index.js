@@ -2,10 +2,10 @@
 
 const chalk = require("chalk");
 const inquirer = require("inquirer");
-const file = require("./fileContent");
-const File = require("./File");
-const Folder = require("./Folder");
-const clearcraConfig = require("./clearcra.config");
+const file = require("../fileContent");
+const File = require("../lib/File");
+const Folder = require("../Folder");
+const clearcraConfig = require("../clearcra.config");
 
 /** Get files from config to be removed  */
 const filesToRemove = clearcraConfig.removeFiles.map(
