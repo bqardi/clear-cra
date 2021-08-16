@@ -1,6 +1,8 @@
 # Clear create-react-app
 
-<img align="center" src="example.gif" alt="example">
+<p align="center">
+  <img src="example.gif" width="600" alt="example">
+</p>
 
 **After** you have created your React project with create-react-app, you can clean it up with:
 
@@ -23,7 +25,7 @@ These are the files that clear-cra prefers to remove:
 - public/logo192.png (you can choose to keep)
 - public/logo512.png (you can choose to keep)
 
-You can also edit `removeFiles` field by `clearcra.config.json`. See [clearcra.config.json](#clearcra.config.json)
+You can also edit `removeFiles` field by `clearcra.config.json`. See [clearcra.config.json](#clearcra-config)
 
 ## Which files are changed?
 
@@ -95,7 +97,7 @@ export default App;
 </html>
 ```
 
-## clearcra.config.json
+## Clearcra Config
 
 Create `clearcra.config.json` in your project's root path.
 
