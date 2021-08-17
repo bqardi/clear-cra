@@ -11,8 +11,26 @@
   },
   "plugins": {
     "@release-it/conventional-changelog": {
-      "preset": "angular",
-      "infile": "CHANGELOG.md"
+      "preset": "conventionalcommits",
+      "infile": "CHANGELOG.md",
+      "gitRawCommitsOpts": {
+        "merges": null
+      },
+      "types": [
+        {
+          "type": "feat",
+          "section": "🚀 Features"
+        },
+        {
+          "type": "fix",
+          "section": "🔧 Bug Fixes"
+        },
+        {
+          "type": "chore",
+          "section": "🌟 Chores"
+        },
+        {}
+      ]
     }
   }
 }
