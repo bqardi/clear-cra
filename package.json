@@ -2,13 +2,13 @@
   "name": "clear-cra",
   "version": "1.1.22",
   "description": "Clears boilerplate content by deleting unnecessary files and changes code to a required minimum.",
-  "main": "bin/index.js",
+  "main": "dist/index.js",
   "files": [
-    "bin",
-    "lib"
+    "dist"
   ],
   "scripts": {
     "prepublish": "npm run format",
+    "build": "babel bin lib --out-dir dist",
     "format": "prettier --write ./**/*.{js,json}",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -37,6 +37,9 @@
     "inquirer": "^8.1.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
     "prettier": "^2.3.2"
   }
 }
