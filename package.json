@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "prepublish": "npm run format",
+    "start": "babel bin lib --out-dir dist --watch",
     "build": "babel bin lib --out-dir dist",
     "format": "prettier --write ./**/*.{js,json}",
     "test": "echo \"Error: no test specified\" && exit 1"
