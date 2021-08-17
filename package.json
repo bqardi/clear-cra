@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "prepublish": "npm run format",
-    "start": "babel bin lib --out-dir dist --watch",
-    "build": "babel bin lib --out-dir dist",
+    "start": "del-cli dist && babel index.js lib --out-dir dist --watch",
+    "build": "del-cli dist && babel index.js lib --out-dir dist",
     "format": "prettier --write ./**/*.{js,json}",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -41,6 +41,7 @@
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
+    "del-cli": "^4.0.1",
     "prettier": "^2.3.2"
   }
 }
