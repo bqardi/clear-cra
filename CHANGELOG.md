@@ -1,3 +1,11 @@
+### [1.2.1](https://github.com/bqardi/clear-cra/compare/1.2.0...1.2.1) (2021-08-17)
+
+
+### 🌟 Chores
+
+* change preset of release.json ([994bd11](https://github.com/bqardi/clear-cra/commit/994bd11fe45d317de8d0bca384c0278438c070f6))
+* Update .release-it.json ([e8261ae](https://github.com/bqardi/clear-cra/commit/e8261aebc6a95563fcb0fe7bc071113fd3b4db48))
+
 # 1.2.0 (2021-08-17)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "clear-cra",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Clears boilerplate content by deleting unnecessary files and changes code to a required minimum.",
   "main": "dist/index.js",
   "files": [
