@@ -1,50 +1,50 @@
 {
-  "name": "clear-cra",
-  "version": "1.2.1",
-  "description": "Clears boilerplate content by deleting unnecessary files and changes code to a required minimum.",
-  "main": "dist/index.js",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "prepublish": "npm run format",
-    "start": "del-cli dist && babel index.js lib --out-dir dist --watch",
-    "build": "del-cli dist && babel index.js lib --out-dir dist",
-    "format": "prettier --write ./**/*.{js,json}",
-    "release": "release-it",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bqardi/clear-cra.git"
-  },
-  "keywords": [
-    "react",
-    "clear",
-    "clean",
-    "boilerplate",
-    "remove"
-  ],
-  "author": "Sune <bqardi@msn.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bqardi/clear-cra/issues"
-  },
-  "homepage": "https://github.com/bqardi/clear-cra#readme",
-  "bin": {
-    "clear-cra": "bin/index.js"
-  },
-  "dependencies": {
-    "chalk": "^4.1.2",
-    "inquirer": "^8.1.2"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
-    "@release-it/conventional-changelog": "^3.2.0",
-    "del-cli": "^4.0.1",
-    "prettier": "^2.3.2",
-    "release-it": "^14.11.5"
-  }
+	"name": "clear-cra",
+	"version": "1.2.1",
+	"description": "Clears boilerplate content by deleting unnecessary files and changes code to a required minimum.",
+	"main": "dist/index.js",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"prepublish": "npm run format",
+		"start": "del-cli dist && babel index.js lib --out-dir dist --watch",
+		"build": "del-cli dist && babel index.js lib --out-dir dist",
+		"format": "prettier --write ./**/*.{js,json}",
+		"release": "release-it",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bqardi/clear-cra.git"
+	},
+	"keywords": [
+		"react",
+		"clear",
+		"clean",
+		"boilerplate",
+		"remove"
+	],
+	"author": "Sune <bqardi@msn.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/bqardi/clear-cra/issues"
+	},
+	"homepage": "https://github.com/bqardi/clear-cra#readme",
+	"bin": {
+		"clear-cra": "bin/index.js"
+	},
+	"dependencies": {
+		"chalk": "^4.1.2",
+		"inquirer": "^8.1.2"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.14.8",
+		"@babel/core": "^7.15.0",
+		"@babel/preset-env": "^7.15.0",
+		"@release-it/conventional-changelog": "^3.2.0",
+		"del-cli": "^4.0.1",
+		"prettier": "^2.3.2",
+		"release-it": "^14.11.5"
+	}
 }

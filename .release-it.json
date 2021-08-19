@@ -1,38 +1,38 @@
 {
-  "git": {
-    "commitMessage": "chore: release v${version}",
-    "push": false
-  },
-  "github": {
-    "release": false
-  },
-  "npm": {
-    "publish": false
-  },
-  "plugins": {
-    "@release-it/conventional-changelog": {
-      "infile": "CHANGELOG.md",
-      "preset": {
-        "name": "conventionalcommits",
-        "types": [
-          {
-            "type": "feat",
-            "section": "🚀 Features"
-          },
-          {
-            "type": "fix",
-            "section": "🔧 Bug Fixes"
-          },
-          {
-            "type": "chore",
-            "section": "🌟 Chores"
-          },
-          {}
-        ]
-      },
-      "gitRawCommitsOpts": {
-        "merges": null
-      }
-    }
-  }
+	"git": {
+		"commitMessage": "chore: release v${version}",
+		"push": false
+	},
+	"github": {
+		"release": false
+	},
+	"npm": {
+		"publish": false
+	},
+	"plugins": {
+		"@release-it/conventional-changelog": {
+			"infile": "CHANGELOG.md",
+			"preset": {
+				"name": "conventionalcommits",
+				"types": [
+					{
+						"type": "feat",
+						"section": "🚀 Features"
+					},
+					{
+						"type": "fix",
+						"section": "🔧 Bug Fixes"
+					},
+					{
+						"type": "chore",
+						"section": "🌟 Chores"
+					},
+					{}
+				]
+			},
+			"gitRawCommitsOpts": {
+				"merges": null
+			}
+		}
+	}
 }
