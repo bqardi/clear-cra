@@ -1,5 +1,9 @@
 # Clear create-react-app
 
+<p align="center">
+  <img src="example.gif" width="600" alt="example">
+</p>
+
 **After** you have created your React project with create-react-app, you can clean it up with:
 
 `npx clear-cra`
@@ -10,7 +14,7 @@ This is very usefull when you don't want to remove and edit all files yourself.
 
 ## Which files are removed?
 
-These are the files that clear-cra tries to remove:
+These are the files that clear-cra prefers to remove:
 
 - src/App.css (you can choose to keep)
 - src/App.test.js (you can choose to keep)
@@ -20,6 +24,8 @@ These are the files that clear-cra tries to remove:
 - public/manifest.json (you can choose to keep)
 - public/logo192.png (you can choose to keep)
 - public/logo512.png (you can choose to keep)
+
+You can also edit `removeFiles` field by `clearcra.config.json`. See [clearcra.config.json](#clearcra-config)
 
 ## Which files are changed?
 
@@ -89,6 +95,17 @@ export default App;
   <div id="root"></div>
 </body>
 </html>
+```
+
+## Clearcra Config
+
+Create `clearcra.config.json` in your project's root path.
+
+```json
+{
+  "removeFiles": ["src/App.css"],
+  "addFolders": ["src/constants"]
+}
 ```
 
 ## Bonus!
